@@ -54,12 +54,17 @@ class EmpDepsController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
         $empDep = $this->empDep->whereKey($id)->first();
 
-        dd($empDep);
-        
+        if(is_null($empDep)){
+            $this->setCode(404);
+            $this->setMessage('Emp dep not found!');
+
+            return $this->composeJson();
+        }
+
         return $this->composeJson([
             'id' => $empDep->getId(),
             'name' => $empDep->getName(),
@@ -69,11 +74,19 @@ class EmpDepsController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, EmpDep $empDep)
+    public function update(Request $request, int $id)
     {
         $data = $request->validate([
             'name' => 'required',
         ]);
+
+        $empDep = $this->empDep->whereKey($id)->first();
+        if(is_null($empDep)){
+            $this->setCode(404);
+            $this->setMessage('Emp dep not found!');
+
+            return $this->composeJson();
+        }
 
         $empDep->update($data);
 
@@ -86,8 +99,17 @@ class EmpDepsController extends ApiController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmpDep $empDep)
+    public function destroy(int $id)
     {
+        $empDep = $this->empDep->whereKey($id)->first();
+
+        if(is_null($empDep)){
+            $this->setCode(404);
+            $this->setMessage('Emp dep not found!');
+
+            return $this->composeJson();
+        }
+
         $empDep->delete();
 
         return $this->composeJson();

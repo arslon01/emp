@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class EmpList.php
  * @package App\Models
- * 
+ *
  * @property int $id
- * @property id $emp_dep_id
- * @property id $emp_position_id
+ * @property int $emp_dep_id
+ * @property int $emp_position_id
+ * @property int $image_id
  * @property string $full_name
  * @property string|null $created_at
  * @property string|null $updated_at
@@ -33,6 +34,11 @@ class EmpList extends Model
         return $this->belongsTo(EmpPosition::class, 'emp_position_id', 'id');
     }
 
+    public function relationEmpImage()
+    {
+        return $this->hasOne(EmpImage::class, 'id', 'image_id');
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -46,6 +52,11 @@ class EmpList extends Model
     public function getEmpPositionId(): int
     {
         return $this->emp_position_id;
+    }
+
+    public function getImageId(): int
+    {
+        return $this->image_id;
     }
 
     public function getFullName(): string

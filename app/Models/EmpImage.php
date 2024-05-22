@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class EmpImage.php
  * @package App\Models
- * 
+ *
  * @property int $id
  * @property string $path
  * @property string $filename
@@ -31,7 +31,7 @@ class EmpImage extends Model
         return $this->path;
     }
 
-    public function geFilename(): string
+    public function getFilename(): string
     {
         return $this->filename;
     }
@@ -49,5 +49,12 @@ class EmpImage extends Model
     public function getUpdatedAt(): ?string
     {
         return $this->updated_at;
+    }
+
+    public function getImageUrl()
+    {
+        $url = $this->getPath() . '/' . $this->getFilename() . '.' . $this->getExtension();
+
+        return asset($url);
     }
 }

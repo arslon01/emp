@@ -15,15 +15,21 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('emp_dep_id');
             $table->unsignedBigInteger('emp_position_id');
+            $table->unsignedBigInteger('image_id');
             $table->string('full_name', 255);
             $table->timestamps();
 
             $table->foreign('emp_dep_id')
                 ->references('id')
                 ->on('emp_deps');
+
             $table->foreign('emp_position_id')
                 ->references('id')
-                ->on('emp_positions');    
+                ->on('emp_positions');
+
+            $table->foreign('image_id')
+                ->references('id')
+                ->on('emp_images');
         });
     }
 
